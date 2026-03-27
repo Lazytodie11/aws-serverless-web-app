@@ -1,172 +1,154 @@
-
----
-
 # Project Notes
 
-## 1. Project Overview
+## Project Name
+AWS Serverless Web Application
 
-Project name:
-- AWS Serverless Web App
+## Purpose
+Build a portfolio-ready AWS serverless web application that combines API development, cloud storage, search, and frontend interaction into one unified project.
 
-Project type:
-- AWS-based serverless web application portfolio project
+## Core Modules
 
-Main modules:
-1. Num2Words API + DynamoDB history
-2. Movie Search API + OpenSearch
+### 1. Num2Words API
+Goal:
+- Accept an integer input
+- Convert the number into English words
+- Return the output through API Gateway + Lambda
+- Extend with DynamoDB history storage
 
-Development style:
-- Follow course recordings
-- Mainly use AWS Console
-- Build incrementally from Homework 1 to Homework 4
-- Keep project reusable for GitHub and resume
-
----
-
-## 2. Homework Mapping
-
-### Homework 1
-Topic:
-- AWS Serverless Hello World
-
-Project role:
-- Serverless foundation
-- API Gateway + Lambda basic connection
-
-Status:
-- Not started
+### 2. Search Movies
+Goal:
+- Search movie data by keyword
+- Use OpenSearch as the backend search engine
+- Return movie results through Lambda + API Gateway
+- Provide a React frontend for interactive search
 
 ---
 
-### Homework 2
-Topic:
-- GET API: integer to English words
+## AWS Services Used
 
-Project role:
-- Num2Words API core logic
-
-Status:
-- Not started
-
----
-
-### Homework 3
-Topic:
-- DynamoDB hands-on
-- Schema design
-- Save num2words input/output to DynamoDB
-- Button alert
-- React + JSX frontend
-
-Project role:
-- Persistence layer for Num2Words
-- Frontend UI for Num2Words
-
-Status:
-- Not started
+- AWS Lambda
+- Amazon API Gateway
+- Amazon DynamoDB
+- Amazon OpenSearch Service
+- Amazon CloudWatch
+- AWS IAM
 
 ---
 
-### Homework 4
-Topic:
-- HTML → API Gateway → Lambda → OpenSearch
-- Movie search
-- movies index
-- bulk import
-- search query
-- CORS
-- AWS4Auth
+## Search Movies Progress Log
 
-Project role:
-- Movie Search module
+### OpenSearch Domain
+Completed:
+- Created OpenSearch domain `movies`
+- Region: `us-east-2`
+- Instance type: `t3.small.search`
+- Storage: `gp3`, 10 GiB
+- Public access enabled
+- Fine-grained access control enabled
 
-Status:
-- Not started
+### Dataset Import
+Completed:
+- Downloaded and extracted `sample-movies.bulk`
+- Imported data into the `movies` index using OpenSearch Dev Tools
+- Verified successful import with `match_all`
 
----
+### Query Validation
+Completed:
+- Verified `match` query on `title`
+- Verified `multi_match` query on:
+  - `title`
+  - `plot`
 
-## 3. AWS Resource Inventory
+### Search Lambda
+Completed:
+- Created Lambda function `search-movies-python`
+- Implemented OpenSearch query logic using:
+  - `boto3`
+  - `requests`
+  - `requests-aws4auth`
+- Packaged dependencies into a zip file and uploaded to Lambda
+- Verified Lambda test query success with `q=star`
 
-### Lambda
-Planned functions:
-- hello
-- num2words
-- search
-- history (optional)
-
-Current status:
-- None created yet
-
----
+### OpenSearch Authorization
+Completed:
+- Diagnosed 403 security exception
+- Mapped Lambda execution role to OpenSearch `all_access`
+- Re-tested Lambda successfully after permission fix
 
 ### API Gateway
-Planned routes:
-- GET /hello
-- GET /num2words?n=...
-- GET /search?q=...
-- GET /history (optional)
+Completed:
+- Added `GET /search`
+- Connected API Gateway to `search-movies-python`
+- Verified browser request:
+  - `/prod/search?q=star`
 
-Current status:
-- Not started
-
----
-
-### DynamoDB
-Planned usage:
-- Store num2words request history
-
-Current status:
-- Not started
+### React Frontend
+Completed:
+- Created React frontend under:
+  - `frontend/movie-search-react/`
+- Built a minimum working search page
+- Connected frontend to the search API
+- Verified successful searches such as:
+  - `star`
+  - `iron man`
 
 ---
 
-### OpenSearch
-Planned usage:
-- Store/search movie data
+## Important Debugging Notes
 
-Known details from Homework 4:
-- region: us-west-2
-- index: movies
-- query: multi_match / match
-- GET / OPTIONS / CORS needed
-- cost-sensitive resource
+### Lambda Dependency Issue
+Error:
+- `No module named 'requests'`
 
-Current status:
-- Not started
+Fix:
+- Installed dependencies locally
+- Packaged them with `lambda_function.py`
+- Uploaded the zip file to Lambda
 
----
+### OpenSearch Authorization Issue
+Error:
+- `403 security_exception`
+- `no permissions for [indices:data/read/search]`
 
-### CloudWatch
-Planned usage:
-- Lambda logs
-- API debugging
-- evidence collection
+Fix:
+- Opened OpenSearch Dashboards security settings
+- Mapped Lambda backend role to `all_access`
 
-Current status:
-- Not started
+### API Gateway Query Parameter Issue
+Problem:
+- Browser request reached Lambda, but `queryStringParameters` was empty
 
----
-
-### IAM
-Planned usage:
-- Lambda access to DynamoDB
-- Lambda access to OpenSearch
-- OpenSearch role mapping
-
-Current status:
-- Not started
+Fix:
+- Verified API Gateway integration setup
+- Re-tested after configuration/deployment update
 
 ---
 
-## 4. Repo / Local Structure
+## Screenshot Checklist
 
-Planned structure:
+### Search Movies
+- OpenSearch create domain review
+- OpenSearch domain created
+- OpenSearch Dashboards opened
+- OpenSearch match query success
+- Search Lambda created
+- Search Lambda CloudWatch initial test
+- OpenSearch role mapping after fix
+- Search API CloudWatch success
+- React search initial page
+- React search success page
 
-```text
-aws-serverless-web-app/
-  README.md
-  docs/
-    notes.md
-    screenshots/
-  backend/
-  frontend/
+---
+
+## Current Project State
+
+Completed:
+- Hello World API minimum version
+- Num2Words API minimum version
+- Search Movies backend minimum version
+- Search Movies frontend minimum version
+
+In progress:
+- DynamoDB history for Num2Words
+- Project documentation cleanup
+- Resume bullet point packaging
