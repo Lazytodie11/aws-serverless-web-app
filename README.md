@@ -30,6 +30,7 @@ Serverless backend APIs + search with a React frontend.
     }
   ]
 }
+```
 
 # AWS Serverless Web Application
 
