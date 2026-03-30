@@ -1,3 +1,36 @@
+# AWS Serverless Web App (Portfolio)
+
+Serverless backend APIs + search with a React frontend.
+
+## 🚀 Live Demo (APIs)
+
+- **Num2Words (Live):**  
+  `GET https://s2y97oaed2.execute-api.us-east-2.amazonaws.com/prod/num2words?num=456`
+
+- **Movie Search (Live):**  
+  `GET https://s2y97oaed2.execute-api.us-east-2.amazonaws.com/prod/search?q=star`  
+  Required query param: `q`
+
+### Sample response (trimmed)
+```json
+{
+  "query": "star",
+  "count": 5,
+  "results": [
+    {
+      "id": "tt0397892",
+      "title": "Bolt",
+      "year": 2008,
+      "rating": 7,
+      "genres": ["Animation", "Adventure", "Comedy", "Family", "Sci-Fi"],
+      "plot": "The canine star of a fictional sci-fi/action show...",
+      "actors": ["John Travolta", "Miley Cyrus", "Susie Essman"],
+      "image_url": "https://m.media-amazon.com/images/...",
+      "score": 2.8779747
+    }
+  ]
+}
+
 # AWS Serverless Web Application
 
 This project is a portfolio-ready serverless web application built on AWS.  
