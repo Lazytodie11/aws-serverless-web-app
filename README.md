@@ -60,22 +60,31 @@ It uses:
 
 ---
 
-## Modules
-
 ### 1. Num2Words API
 
-The Num2Words module accepts an integer input and converts it into English words through a serverless API.
+The Num2Words module accepts a non-negative integer input, converts it into English words through a serverless API, stores request history in DynamoDB, and supports browser-based interaction through a React frontend.
 
-Planned / implemented capabilities:
-- Accept integer input through an API
-- Convert the number into English words
+Implemented capabilities:
+- Accept integer input through API Gateway
+- Convert the number into English words in AWS Lambda
 - Return structured JSON output
-- Extend the workflow with DynamoDB history storage
-- Support frontend interaction through a web page
+- Store request history in Amazon DynamoDB
+- Support browser-based interaction through a React frontend
+- Support CORS for frontend-to-API requests
 
 Example use case:
 - Input: `123`
 - Output: `One Hundred Twenty Three`
+
+Example response:
+
+```json
+{
+  "number": 123,
+  "words": "One Hundred Twenty Three",
+  "saved": true
+}
+```
 
 ---
 
@@ -154,8 +163,9 @@ Example response:
 ## Architecture
 
 ### Num2Words Flow
-Frontend / API Client → API Gateway → Lambda → JSON Response  
-Optional extension: Lambda → DynamoDB
+React Frontend / API Client → API Gateway → Lambda  
+Lambda → DynamoDB (save request history)  
+Lambda → JSON Response → Frontend / API Client
 
 ### Search Movies Flow
 React Frontend → API Gateway → Lambda → OpenSearch → Lambda → Frontend
@@ -207,7 +217,16 @@ This project is actively under development.
 - Project structure created
 - AWS account setup completed
 - Hello World Lambda/API path verified
-- Num2Words API minimum working version completed
+
+- Num2Words Lambda implemented
+- API Gateway `/num2words` endpoint connected successfully
+- DynamoDB table for Num2Words history created
+- Lambda IAM policy updated for DynamoDB write access
+- Num2Words request history successfully stored in DynamoDB
+- React Num2Words frontend implemented
+- Browser-based Num2Words workflow verified successfully
+- CORS-enabled frontend-to-API integration verified
+
 - OpenSearch domain created
 - Movie dataset imported into OpenSearch
 - Search query validation completed in Dev Tools
@@ -217,11 +236,10 @@ This project is actively under development.
 - Browser search workflow verified successfully
 
 ### In Progress
-- DynamoDB-backed history for Num2Words
 - Additional frontend polishing
-- Project documentation cleanup
+- README / docs cleanup
 - Resume / portfolio packaging
-
+  
 ---
 
 ## Project Structure
@@ -235,11 +253,23 @@ aws-serverless-web-app/
   backend/
   frontend/
     movie-search-react/
+    num2words-react/
 ```
 
 ---
 
 ## Screenshots
+
+### Num2Words Lambda test success
+![Num2Words Lambda success](docs/screenshots/Num2Words/num2words-lambda-test-success.jpg)
+
+### Num2Words DynamoDB history
+![Num2Words DynamoDB history](docs/screenshots/Num2Words/num2words-dynamodb-history.jpg)
+
+### Num2Words React frontend
+![Num2Words React frontend](docs/screenshots/Num2Words/num2words-react-frontend-success.jpg)
+
+
 
 ### OpenSearch domain setup
 ![OpenSearch domain created](docs/screenshots/Search_Movies/opensearch-domain-created.jpg)
