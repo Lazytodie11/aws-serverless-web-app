@@ -59,7 +59,9 @@ It uses:
 - **AWS IAM** and OpenSearch security controls for access management
 
 ---
-
+<details>
+  <summary><strong>- **Num2Words API** and **Search Movies**</strong></summary>
+  
 ### 1. Num2Words API
 
 The Num2Words module accepts a non-negative integer input, converts it into English words through a serverless API, stores request history in DynamoDB, and supports browser-based interaction through a React frontend.
@@ -298,3 +300,5 @@ This project demonstrates:
 - Debugging distributed cloud components with CloudWatch
 - Connecting a React frontend to AWS backend services
 - Turning cloud assignments into a portfolio-ready engineering project
+
+</details>
